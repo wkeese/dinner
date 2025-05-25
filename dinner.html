@@ -19,10 +19,6 @@
             grid-template-columns: repeat(4, minmax(100px, 1fr));
             grid-template-rows: auto [last-line];
         }
-
-        #possibleMealContainer li::marker {
-            content: "🍽 ";
-        }
     </style>
 </head>
 <body>
@@ -40,32 +36,54 @@
 
 <script>
   const mealsData = `
-        Lasagna: ground beef, mozarella, ricotta
-        Legendary chicken: chicken, potatoes, さつまいも, carrots
-        Beef stew: beef, potatoes, carrots, wine
-        Lamb stew: lamb, potatoes, carrots, wine
-        Stuffed zucchini: zucchini, sausage, tomatoes, breadcrumbs
-        Stuffed peppers: パプリカ, ひき肉, breadcrumbs
-        Hamburgers: ひき肉, tomatoes, lettuce, avocados, olives, pickles, mushrooms
-        Chicken saute chaucer: chicken, mushrooms, tomatoes, onions
-        Chicken pot pie: potatoes, celery, onions, peas, carrots
-        Quesadillas: cheese, peppers, chicken, onions
-        Tacos: ひき肉, tomatoes, avocados, cheese, olives
-        Salad: cheese, avocados, olives, tomatoes, lettuce
-        Chicken noodle soup, bread, and salad: celery, carrots, onions, lentils
-        Lemon spinach soup, bread, and salad: spinach
-        Hummus: olives
-        Omelette: mushrooms, cheese, tomatoes, パプリカ, ピーマン
-        Polenta: garlic, パプリカ, spinach, collard greens, tomatoes
-        Pizza: tomatoes, mozarella, ピーマン, salami
-        Fish
-        Soba: 長ネギ
-        Udon: 長ネギ
-        Dipping noodles
-        肉じゃが: potatoes, carrots, onions
-        オムラース
-        Roasted chicken
-      `;
+        🇮🇹 Lasagna: ground beef, mozarella, ricotta
+        🍗 Legendary chicken: chicken, potatoes, さつまいも, carrots
+        🍽 Beef stew: beef, potatoes, carrots, red wine
+        🍽 Lamb stew: lamb, potatoes, carrots, red wine
+        🍽 Stuffed zucchini: zucchini, sausage, tomatoes, breadcrumbs
+        🍽 Stuffed peppers: パプリカ, ひき肉, breadcrumbs
+        🍔 Hamburgers: ひき肉, tomatoes, lettuce, avocados, olives, pickles, mushrooms
+        🍗 Chicken saute chaucer: chicken, mushrooms, tomatoes, onions, white wine
+        🥧 Chicken pot pie: potatoes, celery, onions, peas, carrots
+        🍽 Quesadillas: cheese, peppers, chicken, onions, tortillas
+        🌮 Tacos: ひき肉, tomatoes, avocados, cheese, olives, tortillas
+        🥗 Salad: cheese, avocados, olives, tomatoes, lettuce
+        🥣 Chicken noodle soup, bread, and salad: celery, carrots, onions, lentils
+        🥣 Lemon spinach soup, bread, and salad: spinach
+        🥣 Potato pepper soup: potatoes, パプリカ, sausage, cream
+        🍽 Hummus: olives
+        🥚 Omelette: mushrooms, cheese, tomatoes, パプリカ, ピーマン
+        🍽 Polenta: garlic, パプリカ, spinach, collard greens, tomatoes
+        🍕 Pizza: tomatoes, mozarella, ピーマン, salami
+        🐟 サバ, rice, and veggies
+        🐟 サンマ, rice, and veggies
+        🍲 Soba: 長ネギ
+        🍲 Udon: 長ネギ
+        🍜 ラーメン
+        🍽 Dipping noodles
+        🇯🇵 肉じゃが: ひき肉, potatoes, carrots, onions
+        🥚 オムラース
+        🍗 Roasted chicken: chicken
+        🇨🇳 チャハン and 餃子: carrots
+        🍣 手巻き寿司: cucumbers, avocados
+        🇯🇵 みそ dip and veggies: carrots, cucumbers, 大根
+        🍛 Curry
+        🇯🇵 ゴマほうれん草: spinach
+        🥗 ラーメンサラダ： cucumbers
+        🍢 おでん
+        🍲 なべ: 白菜, mushrooms
+        🍲 キムチ soup
+        🍚 Avacado Sashimi Mozarella 3色丼: avocados, mozarella
+        🍚 Spinach egg ひき肉 3色丼: eggs, spinach, ひき肉
+        🍝 Spinach bacon pasta: spinach, bacon, sun-dried tomatoes, cream
+        🍝 Cabbage pasta: cabbage
+        🇯🇵 焼きそば: cabbage, carrots
+        チヂミ Korean pancake thing
+        🇫🇷 Galettes: brie, proscuttio, eggs, tomatoes
+        🇨🇳 マーボドフ: tofu, ひき肉
+        🍆 Eggplant parm: なす
+        🧆 Falafel
+   `;
 
   // Convert plain-text list of meals into Javascript object [ {name: "foo", ingredients: new Set(["a", "b"])}, ... ].
   const meals = mealsData.split("\n").map(line => line.trim()).filter(line => line).map(line => {
@@ -96,7 +114,7 @@
 
   // Update possible meals depending on which checkboxes are checked.
   let possibleMeals = meals;
-  document.addEventListener("change", event => {
+  document.addEventListener("change", () => {
     const selectedIngredients = new Set(Array.from(document.querySelectorAll("input:checked")).map(input => input.id))
     console.log("selected ingredients", selectedIngredients);
 
