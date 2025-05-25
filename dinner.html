@@ -9,9 +9,7 @@
             background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
         }
 
-        details {
-            border: solid black 1px;
-            padding: 5px;
+        fieldset {
             margin-bottom: 10px;
         }
 
@@ -67,15 +65,15 @@
 
 <span id="result"></span> <button type="button" id="pickOneButton" onclick="pickOne();">🎲</button>
 
-<details open>
-    <summary>Ingredient filter</summary>
+<fieldset>
+    <legend>Ingredients filter</legend>
     <ul id="ingredientCheckboxesContainer"></ul>
-</details>
+</fieldset>
 
-<details open>
-    <summary>Possible meals</summary>
+<fieldset>
+    <legend>Possible meals</legend>
     <ul id="possibleMealContainer"></ul>
-</details>
+</fieldset>
 
 <script>
   const mealsData = `
