@@ -9,24 +9,6 @@
             background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
         }
 
-        fieldset {
-            margin-bottom: 10px;
-        }
-
-        summary, label, input, button {
-            cursor: pointer;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        /* Multi column layout. */
-        #ingredientCheckboxesContainer, #possibleMealContainer {
-            column-count: auto;
-            column-width: 16rem;
-        }
-
         /* Button to pick one of the possible meals. */
         #pickOneButton {
             font-size: 400%;
@@ -36,7 +18,6 @@
 
             animation:spin 4s linear infinite;
         }
-
         @keyframes spin {
             100% {
                 transform:rotate(360deg);
@@ -48,10 +29,51 @@
             mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/350% 100%;
             animation: shimmer 2.5s infinite;
         }
-
         @keyframes shimmer {
             100% {
                 mask-position: left
+            }
+        }
+
+        fieldset {
+            margin-bottom: 10px;
+
+            ul {
+                list-style: none;
+
+                /* Multi column layout. */
+                column-count: auto;
+                column-width: 16rem;
+            }
+        }
+
+        /* Style checkboxes to look like toggle buttons. */
+        #ingredients {
+            input {
+                display: none;
+            }
+            label {
+                display: block;
+                cursor: pointer;
+                border: solid 1px transparent;
+                padding: 5px;
+                margin: 5px;
+            }
+            input:checked + label {
+                transition: all 200ms;
+                border-color: black;
+                background: beige;
+            }
+        }
+
+        /* Style meals */
+        #meals li {
+            padding: 5px;
+            transition: all 500ms;
+            opacity: 100%;
+
+            &.disabled {
+                opacity: 50%;
             }
         }
 
@@ -67,12 +89,12 @@
 
 <fieldset>
     <legend>Ingredients filter</legend>
-    <ul id="ingredientCheckboxesContainer"></ul>
+    <ul id="ingredients"></ul>
 </fieldset>
 
 <fieldset>
     <legend>Possible meals</legend>
-    <ul id="possibleMealContainer"></ul>
+    <ul id="meals"></ul>
 </fieldset>
 
 <script>
@@ -145,18 +167,15 @@
   console.log("Ingredients", ingredients);
 
   // Display checkbox for each ingredient.
-  document.getElementById("ingredientCheckboxesContainer").innerHTML = Array.from(ingredients).sort().map(ingredient =>
+  document.getElementById("ingredients").innerHTML = Array.from(ingredients).sort().map(ingredient =>
     `<li>
         <input type="checkbox" id="${ingredient}">
         <label for="${ingredient}">${ingredient}</label>
-    </span>`).join("");
+    </li>`).join("");
 
-  // Display list of specified meals.
-  function displayMeals(meals) {
-    document.getElementById("possibleMealContainer").innerHTML = meals.sort().map(meal =>
+  // Display list of  meals.
+  document.getElementById("meals").innerHTML = meals.sort().map(meal =>
       `<li>${meal.name}</li>`).join("");
-  }
-  displayMeals(meals);
 
   // Update possible meals depending on which checkboxes are checked.
   let possibleMeals = meals;
@@ -164,15 +183,14 @@
     const selectedIngredients = new Set(Array.from(document.querySelectorAll("input:checked")).map(input => input.id))
     console.log("selected ingredients", selectedIngredients);
 
-    if (selectedIngredients.size > 0) {
-      // Find meal with any of the selected ingredients.
-      // Alternative is to find meal with all the selected ingredients.
-      possibleMeals = meals.filter(meal => selectedIngredients.intersection(meal.ingredients).size > 0);
-    } else {
-      possibleMeals = meals;
-    }
+    // Find meal with any of the selected ingredients.
+    // Alternative is to find meal with all the selected ingredients.
+    // TODO: switch to simple array of ids
+    possibleMeals = meals.filter(meal => selectedIngredients.intersection(meal.ingredients).size > 0);
 
-    displayMeals(possibleMeals);
+    for(const meal of document.querySelectorAll("#meals li")) {
+      meal.classList.toggle("disabled", selectedIngredients.size === 0 ? false : !possibleMeals.some(possibleMeal => possibleMeal.name === meal.textContent));
+    }
 
     document.getElementById("result").textContent = "";
   });
