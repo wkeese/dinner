@@ -7,24 +7,35 @@
         details {
             border: solid black 1px;
             padding: 5px;
+            margin-bottom: 10px;
         }
 
         summary, label, input {
             cursor: pointer;
         }
 
-        #ingredientCheckboxesContainer {
+        #ingredientCheckboxesContainer, #possibleMealContainer {
             display: grid;
             grid-template-columns: repeat(4, minmax(100px, 1fr));
             grid-template-rows: auto [last-line];
+        }
+
+        #possibleMealContainer li::marker {
+            content: "🍽 ";
         }
     </style>
 </head>
 <body>
 <h1>What's for dinner?</h1>
-<details>
+
+<details open>
     <summary>Ingredient filter</summary>
     <div id="ingredientCheckboxesContainer"></div>
+</details>
+
+<details open>
+    <summary>Possible meals</summary>
+    <ul id="possibleMealContainer"></ul>
 </details>
 
 <script>
@@ -56,33 +67,51 @@
         Roasted chicken
       `;
 
+  // Convert plain-text list of meals into Javascript object [ {name: "foo", ingredients: new Set(["a", "b"])}, ... ].
   const meals = mealsData.split("\n").map(line => line.trim()).filter(line => line).map(line => {
     const [name, ingredients] = line.split(/: */);
-    return {name, ingredients: ingredients?.split(/, */) ?? []};
+    return {name, ingredients: new Set(ingredients?.split(/, */) ?? [])};
   });
 
   console.log("Meals", meals);
 
-  // Get unique list of ingredients.
-  const ingredients = Array.from(new Set(meals.flatMap(meal => meal.ingredients))).sort();
+  // Get list of unique ingredients.
+  const ingredients = new Set(meals.flatMap(meal => Array.from(meal.ingredients)));
 
   console.log("Ingredients", ingredients);
 
-  document.getElementById("ingredientCheckboxesContainer").innerHTML = ingredients.map(ingredient =>
+  // Create checkbox for each ingredient.
+  document.getElementById("ingredientCheckboxesContainer").innerHTML = Array.from(ingredients).sort().map(ingredient =>
     `<span>
         <input type="checkbox" id="${ingredient}">
         <label for="${ingredient}">${ingredient}</label>
     </span>`).join("");
 
-  const selectedIngredients = new Set();
+  // Display list of possible meals.
+  function displayMeals(meals) {
+    document.getElementById("possibleMealContainer").innerHTML = meals.sort().map(meal =>
+      `<li>${meal.name}</li>`).join("");
+  }
+  displayMeals(meals);
+
+  // Update possible meals depending on which checkboxes are checked.
+  let possibleMeals = meals;
   document.addEventListener("change", event => {
-    console.log("change event", event.target.id, event.target.checked);
-    if (event.target.checked) {
-      selectedIngredients.add(event.target.id);
+    const selectedIngredients = new Set(Array.from(document.querySelectorAll("input:checked")).map(input => input.id))
+    console.log("selected ingredients", selectedIngredients);
+
+    if (selectedIngredients.size > 0) {
+      // Find meal with any of the selected ingredients.
+      // Alternative is to find meal with all the selected ingredients.
+      possibleMeals = meals.filter(meal => selectedIngredients.intersection(meal.ingredients).size > 0);
     } else {
-      selectedIngredients.remove(event.target.id);
+      possibleMeals = meals;
     }
+
+    displayMeals(possibleMeals);
   })
+
+
 </script>
 </body>
 </html>
