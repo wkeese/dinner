@@ -3,34 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>What's for dinner?</title>
+    <style>
+        details {
+            border: solid black 1px;
+            padding: 5px;
+        }
 
+        summary, label, input {
+            cursor: pointer;
+        }
+
+        #ingredientCheckboxesContainer {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(100px, 1fr));
+            grid-template-rows: auto [last-line];
+        }
+    </style>
 </head>
 <body>
-    <h1>What's for dinner?</h1>
-    <fieldset>
-        <legend>Ingredient filter</legend>
-        <div id="ingredientCheckboxes"></div>
-    </fieldset>
+<h1>What's for dinner?</h1>
+<details>
+    <summary>Ingredient filter</summary>
+    <div id="ingredientCheckboxesContainer"></div>
+</details>
 
-    <script>
-      const mealsData = `
+<script>
+  const mealsData = `
         Lasagna: ground beef, mozarella, ricotta
         Legendary chicken: chicken, potatoes, さつまいも, carrots
         Beef stew: beef, potatoes, carrots, wine
-        Lamb stew: lamb, potatoes carrots, wine
+        Lamb stew: lamb, potatoes, carrots, wine
         Stuffed zucchini: zucchini, sausage, tomatoes, breadcrumbs
-        Stuffed peppers: パプリカ,　ひき肉, breadcrumbs
+        Stuffed peppers: パプリカ, ひき肉, breadcrumbs
         Hamburgers: ひき肉, tomatoes, lettuce, avocados, olives, pickles, mushrooms
         Chicken saute chaucer: chicken, mushrooms, tomatoes, onions
-        Chicken pot pie: potatoes, celery, onion, peas, carrots
+        Chicken pot pie: potatoes, celery, onions, peas, carrots
         Quesadillas: cheese, peppers, chicken, onions
-        Tacos: ひき肉, tomatoes, avocado, cheese, olives
+        Tacos: ひき肉, tomatoes, avocados, cheese, olives
         Salad: cheese, avocados, olives, tomatoes, lettuce
         Chicken noodle soup, bread, and salad: celery, carrots, onions, lentils
         Lemon spinach soup, bread, and salad: spinach
         Hummus: olives
         Omelette: mushrooms, cheese, tomatoes, パプリカ, ピーマン
-        Polenta: garlic, bell peppers, spinach, collard greens, tomatoes
+        Polenta: garlic, パプリカ, spinach, collard greens, tomatoes
         Pizza: tomatoes, mozarella, ピーマン, salami
         Fish
         Soba: 長ネギ
@@ -41,19 +56,33 @@
         Roasted chicken
       `;
 
-      const meals = mealsData.split("\n").map(line => line.trim()).filter(line => line).map(line => {
-        const [name, ingredients] = line.split(/: */);
-        return {name, ingredients: ingredients?.split(/, */) ?? []};
-      });
+  const meals = mealsData.split("\n").map(line => line.trim()).filter(line => line).map(line => {
+    const [name, ingredients] = line.split(/: */);
+    return {name, ingredients: ingredients?.split(/, */) ?? []};
+  });
 
-      console.log("Meals", meals);
+  console.log("Meals", meals);
 
-      const ingredients = meals.flatMap(meal => meal.ingredients);
+  // Get unique list of ingredients.
+  const ingredients = Array.from(new Set(meals.flatMap(meal => meal.ingredients))).sort();
 
-      console.log("Ingredients", ingredients);
+  console.log("Ingredients", ingredients);
 
-      document.getElementById("ingredientCheckboxes").innerHTML = "hello world"
+  document.getElementById("ingredientCheckboxesContainer").innerHTML = ingredients.map(ingredient =>
+    `<span>
+        <input type="checkbox" id="${ingredient}">
+        <label for="${ingredient}">${ingredient}</label>
+    </span>`).join("");
 
-    </script>
+  const selectedIngredients = new Set();
+  document.addEventListener("change", event => {
+    console.log("change event", event.target.id, event.target.checked);
+    if (event.target.checked) {
+      selectedIngredients.add(event.target.id);
+    } else {
+      selectedIngredients.remove(event.target.id);
+    }
+  })
+</script>
 </body>
 </html>
