@@ -178,18 +178,17 @@
       `<li>${meal.name}</li>`).join("");
 
   // Update possible meals depending on which checkboxes are checked.
-  let possibleMeals = meals;
+  let possibleMeals = meals.map(meal => meal.name);
   document.addEventListener("change", () => {
     const selectedIngredients = new Set(Array.from(document.querySelectorAll("input:checked")).map(input => input.id))
     console.log("selected ingredients", selectedIngredients);
 
     // Find meal with any of the selected ingredients.
     // Alternative is to find meal with all the selected ingredients.
-    // TODO: switch to simple array of ids
-    possibleMeals = meals.filter(meal => selectedIngredients.intersection(meal.ingredients).size > 0);
+    possibleMeals = meals.filter(meal => selectedIngredients.intersection(meal.ingredients).size > 0).map(meal => meal.name);
 
     for(const meal of document.querySelectorAll("#meals li")) {
-      meal.classList.toggle("disabled", selectedIngredients.size === 0 ? false : !possibleMeals.some(possibleMeal => possibleMeal.name === meal.textContent));
+      meal.classList.toggle("disabled", selectedIngredients.size === 0 ? false : !possibleMeals.some(possibleMeal => possibleMeal === meal.textContent));
     }
 
     document.getElementById("result").textContent = "";
@@ -204,7 +203,7 @@
       let newPickedMealIndex = Math.floor(Math.random() * possibleMeals.length);
       if (newPickedMealIndex === pickedMealIndex) newPickedMealIndex = (pickedMealIndex + 1) % possibleMeals.length;
 
-      pickedMeal = possibleMeals[newPickedMealIndex].name;
+      pickedMeal = possibleMeals[newPickedMealIndex];
     }
 
     // Display new text with a transition effect.
