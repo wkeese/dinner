@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>What's for dinner?</title>
+
+</head>
+<body>
+    <h1>What's for dinner?</h1>
+    <fieldset>
+        <legend>Ingredient filter</legend>
+        <div id="ingredientCheckboxes"></div>
+    </fieldset>
+
+    <script>
+      const mealsData = `
+        Lasagna: ground beef, mozarella, ricotta
+        Legendary chicken: chicken, potatoes, さつまいも, carrots
+        Beef stew: beef, potatoes, carrots, wine
+        Lamb stew: lamb, potatoes carrots, wine
+        Stuffed zucchini: zucchini, sausage, tomatoes, breadcrumbs
+        Stuffed peppers: パプリカ,　ひき肉, breadcrumbs
+        Hamburgers: ひき肉, tomatoes, lettuce, avocados, olives, pickles, mushrooms
+        Chicken saute chaucer: chicken, mushrooms, tomatoes, onions
+        Chicken pot pie: potatoes, celery, onion, peas, carrots
+        Quesadillas: cheese, peppers, chicken, onions
+        Tacos: ひき肉, tomatoes, avocado, cheese, olives
+        Salad: cheese, avocados, olives, tomatoes, lettuce
+        Chicken noodle soup, bread, and salad: celery, carrots, onions, lentils
+        Lemon spinach soup, bread, and salad: spinach
+        Hummus: olives
+        Omelette: mushrooms, cheese, tomatoes, パプリカ, ピーマン
+        Polenta: garlic, bell peppers, spinach, collard greens, tomatoes
+        Pizza: tomatoes, mozarella, ピーマン, salami
+        Fish
+        Soba: 長ネギ
+        Udon: 長ネギ
+        Dipping noodles
+        肉じゃが: potatoes, carrots, onions
+        オムラース
+        Roasted chicken
+      `;
+
+      const meals = mealsData.split("\n").map(line => line.trim()).filter(line => line).map(line => {
+        const [name, ingredients] = line.split(/: */);
+        return {name, ingredients: ingredients?.split(/, */) ?? []};
+      });
+
+      console.log("Meals", meals);
+
+      const ingredients = meals.flatMap(meal => meal.ingredients);
+
+      console.log("Ingredients", ingredients);
+
+      document.getElementById("ingredientCheckboxes").innerHTML = "hello world"
+
+    </script>
+</body>
+</html>
