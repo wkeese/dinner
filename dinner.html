@@ -181,7 +181,16 @@
 
       pickedMeal = possibleMeals[newPickedMealIndex].name;
     }
-    document.getElementById("result").textContent = pickedMeal;
+
+    // Display new text with a transition effect.
+    function setText () {
+      document.getElementById("result").textContent = pickedMeal;
+    }
+    if (document.startViewTransition) {
+      document.startViewTransition(setText);
+    } else {
+      setText();
+    }
   }
 </script>
 </body>
