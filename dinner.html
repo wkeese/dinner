@@ -53,16 +53,34 @@
                 display: none;
             }
             label {
-                display: block;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
                 cursor: pointer;
                 border: solid 1px transparent;
+                background: white;
                 padding: 5px;
                 margin: 5px;
+                transition: all 200ms;
+
+                &:hover {
+                    background: beige;
+                    border-color: black;
+                }
+
+                &::after {
+                    /* To prevent height change, always render checkbox, but toggle visibility. */
+                    content: "✅";
+                    visibility: hidden;
+                }
             }
             input:checked + label {
-                transition: all 200ms;
                 border-color: black;
                 background: beige;
+
+                &::after {
+                    visibility: visible;
+                }
             }
         }
 
@@ -133,7 +151,7 @@
         🇯🇵 みそ dip and veggies: carrots, cucumbers, 大根
         🍛 Curry: chicken, potatoes, carrots, mushrooms
         🇯🇵 ゴマほうれん草: spinach
-        🥗 ラーメンサラダ： cucumbers
+        🥗 ラーメンサラダ: cucumbers
         🍢 おでん: 大根
         🍲 なべ: 白菜, mushrooms
         🍲 キムチ soup
