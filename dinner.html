@@ -10,7 +10,7 @@
             margin-bottom: 10px;
         }
 
-        summary, label, input {
+        summary, label, input, button {
             cursor: pointer;
         }
 
@@ -24,6 +24,18 @@
             column-width: 16rem;
         }
 
+        /* Button to pick one of the possible meals. */
+        #pickOneButton {
+            font-size: 400%;
+            border: none;
+            background: none !important;
+            cursor: grab;
+        }
+
+        #result {
+            font-size: 400%;
+        }
+
         * {
             text-transform: capitalize;
         }
@@ -31,6 +43,8 @@
 </head>
 <body>
 <h1>What's for dinner?</h1>
+
+<span id="result"></span> <button type="button" id="pickOneButton" onclick="pickOne();">🎲</button>
 
 <details open>
     <summary>Ingredient filter</summary>
@@ -53,7 +67,7 @@
         🍔 Hamburgers: ひき肉, tomatoes, lettuce, avocados, olives, pickles, mushrooms
         🍗 Chicken saute chaucer: chicken, mushrooms, tomatoes, white wine
         🥧 Chicken pot pie: potatoes, celery, peas, carrots
-        🍽 Quesadillas: cheese, peppers, chicken, tortillas
+        🍽 Quesadillas: cheese, パプリカ, chicken, tortillas
         🌮 Tacos: ひき肉, tomatoes, avocados, cheese, olives, tortillas
         🥗 Salad: cheese, avocados, olives, tomatoes, lettuce
         🥣 Chicken noodle soup, bread, and salad: celery, carrots, lentils
@@ -101,19 +115,19 @@
 
   console.log("Meals", meals);
 
-  // Get list of unique ingredients.
+  // Get set of unique ingredients.
   const ingredients = new Set(meals.flatMap(meal => Array.from(meal.ingredients)));
 
   console.log("Ingredients", ingredients);
 
-  // Create checkbox for each ingredient.
+  // Display checkbox for each ingredient.
   document.getElementById("ingredientCheckboxesContainer").innerHTML = Array.from(ingredients).sort().map(ingredient =>
     `<li>
         <input type="checkbox" id="${ingredient}">
         <label for="${ingredient}">${ingredient}</label>
     </span>`).join("");
 
-  // Display list of possible meals.
+  // Display list of specified meals.
   function displayMeals(meals) {
     document.getElementById("possibleMealContainer").innerHTML = meals.sort().map(meal =>
       `<li>${meal.name}</li>`).join("");
@@ -136,6 +150,20 @@
 
     displayMeals(possibleMeals);
   });
+
+  // Pick one for me.
+  let pickedMealIndex;
+  function pickOne() {
+    let pickedMeal = "";
+    if (possibleMeals.length > 0) {
+      // Pick a meal that's (if possible) different than the previous one.
+      let newPickedMealIndex = Math.floor(Math.random() * possibleMeals.length);
+      if (newPickedMealIndex === pickedMealIndex) newPickedMealIndex = (pickedMealIndex + 1) % possibleMeals.length;
+
+      pickedMeal = possibleMeals[newPickedMealIndex].name;
+    }
+    document.getElementById("result").textContent = pickedMeal;
+  }
 </script>
 </body>
 </html>
