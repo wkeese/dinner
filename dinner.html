@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>What's for dinner?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
         body {
             background: #ffffff;
@@ -26,13 +27,6 @@
 
         #result {
             font-size: 400%;
-            mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/350% 100%;
-            animation: shimmer 2.5s infinite;
-        }
-        @keyframes shimmer {
-            100% {
-                mask-position: left
-            }
         }
 
         fieldset {
@@ -124,7 +118,7 @@
 <span id="result"></span> <button type="button" id="pickOneButton" onclick="pickOne();">🎲</button>
 
 <fieldset>
-    <legend>Ingredients filter</legend>
+    <legend>Leftover Ingredients</legend>
     <ul id="ingredients"></ul>
 </fieldset>
 
@@ -134,11 +128,138 @@
 </fieldset>
 
 <script>
+  const ingredients = [
+    {
+      "icon": "🥑",
+      "name": "avocados"
+    },
+    {
+      "icon": "🥓",
+      "name": "bacon"
+    },
+    {
+      "icon": "",
+      "name": "cabbage"
+    },
+    {
+      "icon": "🥕",
+      "name": "carrots"
+    },
+    {
+      "icon": "",
+      "name": "celery"
+    },
+    {
+      "icon": "🧀",
+      "name": "cheese"
+    },
+    {
+      "icon": "🐔",
+      "name": "chicken"
+    },
+    {
+      "icon": "",
+      "name": "cream"
+    },
+    {
+      "icon": "🥒",
+      "name": "cucumbers"
+    },
+    {
+      "icon": "🍆",
+      "name": "eggplant"
+    },
+    {
+      "icon": "🥚",
+      "name": "eggs"
+    },
+    {
+      "icon": "",
+      "name": "lettuce"
+    },
+    {
+      "icon": "🧀",
+      "name": "mozarella"
+    },
+    {
+      "icon": "🍄",
+      "name": "mushrooms"
+    },
+    {
+      "icon": "🥔",
+      "name": "potatoes"
+    },
+    {
+      "icon": "🎃",
+      "name": "pumpkin"
+    },
+    {
+      "icon": "🍷",
+      "name": "red wine"
+    },
+    {
+      "icon": "",
+      "name": "salami"
+    },
+    {
+      "icon": "🌭",
+      "name": "sausage"
+    },
+    {
+      "icon": "🥬",
+      "name": "spinach"
+    },
+    {
+      "icon": "",
+      "name": "tofu"
+    },
+    {
+      "icon": "🍅",
+      "name": "tomatoes"
+    },
+    {
+      "icon": "🍷",
+      "name": "white wine"
+    },
+    {
+      "icon": "",
+      "name": "zucchini"
+    },
+    {
+      "icon": "🍠",
+      "name": "さつまいも"
+    },
+    {
+      "icon": "🍔",
+      "name": "ひき肉"
+    },
+    {
+      "icon": "🫑",
+      "name": "パプリカ"
+    },
+    {
+      "icon": "",
+      "name": "ピーマン"
+    },
+    {
+      "icon": "",
+      "name": "大根"
+    },
+    {
+      "icon": "🥬",
+      "name": "白菜"
+    },
+    {
+      "icon": "🧅",
+      "name": "長ネギ"
+    }
+  ];
+
   const mealsData = `
         🇮🇹: Lasagna: ひき肉, mozarella
         🍗: Legendary chicken: chicken, potatoes, さつまいも, carrots
-        🍽: Beef stew: beef, potatoes, carrots, red wine
-        🍽: Lamb stew: lamb, potatoes, carrots, red wine
+        🍽: Beef stew: potatoes, carrots, red wine
+        🍽: Lamb stew: potatoes, carrots, red wine
         🍽: Stuffed zucchini: zucchini, sausage, tomatoes
         🍽: Stuffed peppers: ピーマン, ひき肉
         🍔: Hamburgers: ひき肉, tomatoes, lettuce, avocados, mushrooms
@@ -151,6 +272,7 @@
         🍲: Chicken noodle soup, bread, and salad: celery, carrots
         🍲: Lentil spinach soup, bread, and salad: spinach
         🍲: Potato pepper soup: potatoes, パプリカ, sausage, cream
+        🍲: Pumpkin soup: pumpkin
         🫓: Hummus
         🥚: Omelette: mushrooms, cheese, tomatoes, ピーマン
         🍽: Polenta: パプリカ, spinach, tomatoes
@@ -181,9 +303,10 @@
         🇰🇷: チヂミ Korean pancake thing
         🇫🇷: Galettes: eggs, tomatoes
         🇨🇳: マーボドフ: tofu, ひき肉
-        🍆: Eggplant parm: なす
+        🍆: Eggplant parm: eggplant
+        🎃: Pumpkin and つくね stew
         🧆: Falafel
-        🇨🇳: マーボーなす: なす
+        🇨🇳: マーボーなす: eggplant
         🥧: Sheperd's Pie: potatoes, ひき肉, carrots
         🍽: Casserole: cream, cheese, carrots
         🍽: Gratin
@@ -197,16 +320,16 @@
 
   console.log("Meals", meals);
 
-  // Get set of unique ingredients.
-  const ingredients = new Set(meals.flatMap(meal => Array.from(meal.ingredients)));
+  // TODO: Check that no ingredients specified in meals that aren't in ingredients
+  const ingredients2 = new Set(meals.flatMap(meal => Array.from(meal.ingredients)));
 
   console.log("Ingredients", ingredients);
 
   // Display checkbox for each ingredient.
   document.getElementById("ingredients").innerHTML = Array.from(ingredients).sort().map(ingredient =>
     `<li>
-        <input type="checkbox" id="${ingredient}">
-        <label for="${ingredient}">${ingredient}</label>
+        <input type="checkbox" id="${ingredient.name}">
+        <label for="${ingredient.name}">${ingredient.icon} ${ingredient.name}</label>
     </li>`).join("");
 
   // Display list of  meals.
