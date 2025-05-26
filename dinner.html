@@ -5,8 +5,8 @@
     <title>What's for dinner?</title>
     <style>
         body {
-            background: #EEAECA;
-            background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+            background: #ffffff;
+            background: linear-gradient(2deg, rgba(255, 255, 255, 1) 0%, rgba(148, 187, 233, 1) 100%);
         }
 
         /* Button to pick one of the possible meals. */
@@ -89,10 +89,14 @@
             padding: 5px;
             transition: all 500ms;
             opacity: 100%;
+        }
 
-            &.disabled {
-                opacity: 50%;
-            }
+        /* Styling only for when one or more ingredients are selected. */
+        #meals li.matched {
+            color: blue;
+        }
+        fieldset:has(input:checked) + fieldset #meals li:not(.matched) {
+            opacity: 50%;
         }
 
         * {
@@ -205,8 +209,10 @@
     // Alternative is to find meal with all the selected ingredients.
     possibleMeals = meals.filter(meal => selectedIngredients.intersection(meal.ingredients).size > 0).map(meal => meal.name);
 
+    // Gray out invalid meals, and highlight ones that are still valid.
     for(const meal of document.querySelectorAll("#meals li")) {
-      meal.classList.toggle("disabled", selectedIngredients.size === 0 ? false : !possibleMeals.some(possibleMeal => possibleMeal === meal.textContent));
+      const included = possibleMeals.some(possibleMeal => possibleMeal === meal.textContent)
+      meal.classList.toggle("matched", selectedIngredients.size > 0 && included);
     }
 
     document.getElementById("result").textContent = "";
