@@ -40,18 +40,19 @@
 
             ul {
                 list-style: none;
-
-                /* Multi column layout. */
-                column-count: auto;
-                column-width: 16rem;
             }
         }
 
         /* Style checkboxes to look like toggle buttons. */
         #ingredients {
+            /* Multi column layout. */
+            column-count: auto;
+            column-width: 16rem;
+
             input {
                 display: none;
             }
+
             label {
                 display: flex;
                 flex-direction: row;
@@ -85,24 +86,32 @@
         }
 
         /* Style meals */
-        #meals li {
-            padding: 5px;
-            transition: all 500ms;
-            opacity: 100%;
+        #meals {
+              /* Multi column layout. */
+              column-count: auto;
+              column-width: 20rem;
 
-            /* Try to keep things in place when font size increased/decreased. */
-            line-height: 125%;
-        }
+              li {
+                  padding: 5px;
+                  transition: all 300ms;
+                  opacity: 100%;
 
-        /* Styling only for when one or more ingredients are selected. */
-        #meals li.matched {
-            color: blue;
-            font-size: 125%;
-        }
-        fieldset:has(input:checked) + fieldset #meals li:not(.matched) {
-            opacity: 50%;
-            font-size: 75%;
-        }
+                  /* Try to keep things in place when font size increased/decreased. */
+                  min-height: 2.5rem;
+              }
+
+              /* Styling only for when one or more ingredients are selected. */
+              li.matched {
+                  color: blue;
+                  font-size: 125%;
+              }
+
+            fieldset:has(input:checked) + fieldset & li:not(.matched) {
+                opacity: 50%;
+                font-size: 75%;
+            }
+          }
+
 
         * {
             text-transform: capitalize;
@@ -164,7 +173,7 @@
         🍢: おでん: 大根
         🍲: なべ: 白菜, mushrooms
         🍲: キムチ soup
-        🍚: Avacado Sashimi Mozarella 3色丼: avocados, mozarella
+        🍚: Avocado Sashimi Mozarella 3色丼: avocados, mozarella
         🍚: Spinach egg ground beef 3色丼: eggs, spinach, ground beef
         🍝: Spinach bacon pasta: spinach, bacon, sun-dried tomatoes, cream
         🍝: Cabbage pasta: cabbage
