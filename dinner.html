@@ -83,10 +83,6 @@
               li {
                   padding: 5px;
                   transition: all 300ms;
-                  opacity: 100%;
-
-                  /* Try to keep things in place when font size increased/decreased. */
-                  min-height: 2.5rem;
               }
 
               /* Styling only for when one or more ingredients are selected. */
@@ -96,8 +92,7 @@
               }
 
             fieldset:has(input:checked) + fieldset & li:not(.matched) {
-                opacity: 50%;
-                font-size: 75%;
+                display: none;
             }
           }
 
@@ -329,7 +324,6 @@
 
   // Display list of  meals.
   document.getElementById("meals").innerHTML = meals.sort((a, b) => {
-    console.log("compare", a.name, b.name, a.name > b.name)
     return a.name > b.name ? 1 : -1;
   }).map(meal =>
       `<li id="${meal.name}">${meal.icon} ${meal.name}</li>`).join("");
