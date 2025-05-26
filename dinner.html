@@ -135,17 +135,17 @@
 
 <script>
   const mealsData = `
-        🇮🇹: Lasagna: ground beef, mozarella, ricotta
+        🇮🇹: Lasagna: ひき肉, mozarella, ricotta
         🍗: Legendary chicken: chicken, potatoes, さつまいも, carrots
         🍽: Beef stew: beef, potatoes, carrots, red wine
         🍽: Lamb stew: lamb, potatoes, carrots, red wine
         🍽: Stuffed zucchini: zucchini, sausage, tomatoes
-        🍽: Stuffed peppers: bell peppers, ground beef, breadcrumbs
-        🍔: Hamburgers: ground beef, tomatoes, lettuce, avocados, mushrooms
+        🍽: Stuffed peppers: bell peppers, ひき肉, breadcrumbs
+        🍔: Hamburgers: ひき肉, tomatoes, lettuce, avocados, mushrooms
         🍗: Chicken saute chaucer: chicken, mushrooms, tomatoes, white wine
         🥧: Chicken pot pie: potatoes, celery, mixed veggies
         🇲🇽: Quesadillas: cheese, bell peppers, chicken, tortillas
-        🌮: Tacos: ground beef, tomatoes, avocados, cheese, tortillas
+        🌮: Tacos: ひき肉, tomatoes, avocados, cheese, tortillas
         🥗: Salad: cheese, avocados, tomatoes, lettuce, cucumbers
         🍲: Lentil soup, bread, and salad: celery, carrots
         🍲: Chicken noodle soup, bread, and salad: celery, carrots
@@ -161,7 +161,7 @@
         🍲: Udon: 長ネギ
         🍜: ラーメン
         🍽: Dipping noodles
-        🇯🇵: 肉じゃが: ground beef, potatoes, carrots
+        🇯🇵: 肉じゃが: ひき肉, potatoes, carrots
         🥚: オムラース: eggs
         🍗: Roasted chicken: chicken, さつまいも
         🇨🇳: チャハン and 餃子: carrots
@@ -174,17 +174,17 @@
         🍲: なべ: 白菜, mushrooms
         🍲: キムチ soup
         🍚: Avocado Sashimi Mozarella 3色丼: avocados, mozarella
-        🍚: Spinach egg ground beef 3色丼: eggs, spinach, ground beef
+        🍚: Spinach egg ひき肉 3色丼: eggs, spinach, ひき肉
         🍝: Spinach bacon pasta: spinach, bacon, sun-dried tomatoes, cream
         🍝: Cabbage pasta: cabbage
         🇯🇵: 焼きそば: cabbage, carrots
         🇰🇷: チヂミ Korean pancake thing
         🇫🇷: Galettes: brie, prosciutto, eggs, tomatoes
-        🇨🇳: マーボドフ: tofu, ground beef
+        🇨🇳: マーボドフ: tofu, ひき肉
         🍆: Eggplant parm: なす
         🧆: Falafel
         🇨🇳: マーボーなす: なす
-        🥧: Sheperd's Pie: potatoes, ground beef, mixed veggies
+        🥧: Sheperd's Pie: potatoes, ひき肉, mixed veggies
         🍽: Casserole: cream, cheese, mixed veggies
         🍽: Gratin: mixed veggies
    `;
@@ -224,7 +224,7 @@
 
     // Find meals with any of the selected ingredients.
     // Alternative is to find meal with all the selected ingredients.
-    possibleMeals = meals.filter(meal => selectedIngredients.intersection(meal.ingredients).size > 0).map(meal => meal.name);
+    possibleMeals = (selectedIngredients.size > 0  ? meals.filter(meal => selectedIngredients.intersection(meal.ingredients).size > 0) : meals).map(meal => meal.name);
 
     // Gray out invalid meals, and highlight ones that are still valid.
     for(const meal of document.querySelectorAll("#meals li")) {
@@ -240,7 +240,7 @@
   function pickOne() {
     let pickedMeal = "";
     if (possibleMeals.length > 0) {
-      // Pick a meal that's (if possible) different than the previous one.
+      // Pick a meal that's (if possible) different from the previous one.
       let newPickedMealIndex = Math.floor(Math.random() * possibleMeals.length);
       if (newPickedMealIndex === pickedMealIndex) newPickedMealIndex = (pickedMealIndex + 1) % possibleMeals.length;
 
