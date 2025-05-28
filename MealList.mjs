@@ -2,7 +2,7 @@ import {ingredients} from './ingredients.mjs';
 import {meals} from './meals.mjs';
 
 
-class MealsList extends HTMLElement {
+class MealList extends HTMLElement {
   static observedAttributes = ["filter"];
 
   // Lifecycle methods
@@ -64,4 +64,4 @@ class MealsList extends HTMLElement {
   }
 }
 
-customElements.define("meals-list", MealsList);
+customElements.define("meal-list", MealList);

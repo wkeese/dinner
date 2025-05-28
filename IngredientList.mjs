@@ -1,6 +1,6 @@
 import {ingredients} from './ingredients.mjs';
 
-class IngredientsList extends HTMLElement {
+class IngredientList extends HTMLElement {
   // Lifecycle methods
   connectedCallback() {
     this.value = new Set();
@@ -83,4 +83,4 @@ class IngredientsList extends HTMLElement {
   }
 }
 
-customElements.define("ingredients-list", IngredientsList);
+customElements.define("ingredient-list", IngredientList);

@@ -5,25 +5,23 @@
     <title>What's for dinner?</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" type="text/css" href="index.css">
-    <script type="module" src="./IngredientsList.mjs"></script>
-    <script type="module" src="./MealsList.mjs"></script>
+    <script type="module" src="./MealPicker.mjs"></script>
+    <script type="module" src="./IngredientList.mjs"></script>
+    <script type="module" src="./MealList.mjs"></script>
 </head>
 <body>
     <h1>What's for dinner?</h1>
 
-    <div id="pickerContainer">
-    <button type="button" id="pickOneButton">🎲</button>
-    → <span id="result">&nbsp;</span>
-    </div>
+    <meal-picker></meal-picker>
 
     <fieldset>
         <legend>Leftover Ingredients</legend>
-        <ingredients-list></ingredients-list>
+        <ingredient-list></ingredient-list>
     </fieldset>
 
     <fieldset>
         <legend>Possible meals</legend>
-        <meals-list></meals-list>
+        <meal-list></meal-list>
     </fieldset>
 
     <script type="module" src="./index.mjs"></script>

@@ -3,34 +3,6 @@ body {
     background: linear-gradient(2deg, rgba(255, 255, 255, 1) 0%, rgba(148, 187, 233, 1) 100%);
 }
 
-/* Button to pick one of the possible meals. */
-#pickerContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: 400%;
-    gap: 10px;
-}
-
-#pickOneButton {
-    font-size: 100%;
-    border: none;
-    background: none !important;
-    cursor: grab;
-
-    animation: spin 4s linear infinite;
-}
-
-@keyframes spin {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-#result {
-    line-height: 200%;
-}
-
 /* Container for ingredients and meals */
 fieldset {
     margin-bottom: 10px;
