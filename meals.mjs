@@ -49,7 +49,7 @@ const mealsData = `
       🇫🇷: Galettes: eggs, tomatoes
       🇨🇳: マーボドフ: tofu, ひき肉
       🍆: Eggplant parm: eggplant
-      🎃: Pumpkin and つくね stew
+      🎃: Pumpkin and つくね stew: pumpkin, ひき肉
       🧆: Falafel
       🇨🇳: マーボーなす: eggplant
       🥧: Sheperd's Pie: potatoes, ひき肉, carrots
