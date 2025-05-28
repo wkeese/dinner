@@ -28,18 +28,18 @@ class MealList extends HTMLElement {
           padding: 5px;
           text-transform: capitalize;
           transition: all 200ms;
-      }
-
-      /* Styling only for when one or more ingredients are selected. */
-      ul.filtered li {
-          &.matched {
-              color: navy;
-              font-size: 110%;
-          }
-  
-          &:not(.matched) {
-              padding: 0;
-              font-size: 0;
+          
+          /* Styling only for when one or more ingredients are selected. */
+          ul.filtered & {
+              &.matched {
+                  color: navy;
+                  font-size: 110%;
+              }
+      
+              &:not(.matched) {
+                  padding: 0;
+                  font-size: 0;
+              }
           }
       }
     `;

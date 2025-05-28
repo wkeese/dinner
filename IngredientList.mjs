@@ -15,11 +15,11 @@ class IngredientList extends HTMLElement {
     const style = document.createElement("style");
     style.textContent = `
       ul {
-        list-style: none;
-        
-        /* Multi column layout. */
-        column-count: auto;
-        column-width: 16rem;
+          list-style: none;
+          
+          /* Multi column layout. */
+          column-count: auto;
+          column-width: 16rem;
      }
   
       button {
