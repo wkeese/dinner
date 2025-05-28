@@ -35,31 +35,3 @@ body {
 fieldset {
     margin-bottom: 10px;
 }
-
-/* Style meals */
-#meals {
-    list-style: none;
-
-    /* Multi column layout. */
-    column-count: auto;
-    column-width: 20rem;
-
-    li {
-        padding: 5px;
-        text-transform: capitalize;
-        transition: all 200ms;
-    }
-
-    /* Styling only for when one or more ingredients are selected. */
-    &.filtered li {
-        &.matched {
-            color: navy;
-            font-size: 110%;
-        }
-
-        &:not(.matched) {
-            padding: 0;
-            font-size: 0;
-        }
-    }
-}

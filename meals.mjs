@@ -61,4 +61,15 @@ const mealsData = `
 export const meals = mealsData.split("\n").map(line => line.trim()).filter(line => line).map(line => {
   const [icon, name, ingredients] = line.split(/: */);
   return {icon, name, ingredients: new Set(ingredients?.split(/, */) ?? [])};
+}).sort((a, b) => {
+  return a.name > b.name ? 1 : -1;
 });
+
+// Data consistency checking.
+// I used to extract the ingredients from meals.mjs, but I made a dedicated ingredients.mjs so I could add icons.
+import { ingredients } from "./ingredients.mjs";
+const ingredients2 = new Set(meals.flatMap(meal => Array.from(meal.ingredients)));
+const missingIngredients = ingredients2.difference(new Set(Array.from(ingredients).map(ingredient => ingredient.name)));
+if (missingIngredients.size > 0) {
+  console.warn("Ingredients in meals.mjs not in ingredients.mjs:", missingIngredients);
+}
