@@ -34,72 +34,32 @@ body {
 /* Container for ingredients and meals */
 fieldset {
     margin-bottom: 10px;
-
-    ul {
-        list-style: none;
-    }
-}
-
-/* Style ingredients to look like toggle buttons. */
-#ingredients {
-    /* Multi column layout. */
-    column-count: auto;
-    column-width: 16rem;
-
-    button {
-        display: flex;
-        width: 14rem;
-        flex-direction: row;
-        justify-content: space-between;
-        cursor: pointer;
-        border: solid 1px transparent;
-        background: white;
-        padding: 5px;
-        margin: 5px;
-        transition: all 200ms;
-
-        &::after {
-            /* To prevent height change, always render checkbox, but toggle visibility. */
-            content: "✅";
-            visibility: hidden;
-        }
-
-        &[aria-pressed="true"] {
-            border-color: black;
-            background: beige;
-
-            &::after {
-                visibility: visible;
-            }
-        }
-    }
 }
 
 /* Style meals */
 #meals {
+    list-style: none;
+
     /* Multi column layout. */
     column-count: auto;
     column-width: 20rem;
 
     li {
         padding: 5px;
+        text-transform: capitalize;
         transition: all 200ms;
     }
 
     /* Styling only for when one or more ingredients are selected. */
+    &.filtered li {
+        &.matched {
+            color: navy;
+            font-size: 110%;
+        }
 
-    li.matched {
-        color: navy;
-        font-size: 110%;
+        &:not(.matched) {
+            padding: 0;
+            font-size: 0;
+        }
     }
-
-    fieldset:has([aria-pressed="true"]) + fieldset & li:not(.matched) {
-        padding: 0;
-        font-size: 0;
-    }
-}
-
-
-* {
-    text-transform: capitalize;
 }

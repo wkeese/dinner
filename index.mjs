@@ -9,14 +9,6 @@ if (missingIngredients.size > 0) {
   console.warn("Ingredients in meals.mjs not in ingredients.mjs:", missingIngredients);
 }
 
-// Display checkbox for each ingredient.
-document.getElementById("ingredients").innerHTML = Array.from(ingredients).sort().map(ingredient =>
-  `<li>
-      <button id="${ingredient.name}" aria-pressed="false">
-          ${ingredient.icon} ${ingredient.name}
-      </button>
-  </li>`).join("");
-
 // Display list of  meals.
 document.getElementById("meals").innerHTML = meals.sort((a, b) => {
   return a.name > b.name ? 1 : -1;
@@ -25,13 +17,8 @@ document.getElementById("meals").innerHTML = meals.sort((a, b) => {
 
 // Update possible meals depending on which checkboxes are checked.
 let possibleMeals = meals.map(meal => meal.name);
-document.getElementById("ingredients").addEventListener("click", (event) => {
-  const button = event.target;
-  if (event.target.tagName.toLowerCase() === "button") {
-    event.target.setAttribute("aria-pressed", event.target.getAttribute("aria-pressed") === "true" ? "false" : "true");
-
-    const selectedIngredients = new Set(Array.from(document.querySelectorAll("button[aria-pressed='true']")).map(input => input.id))
-    console.log("selected ingredients", selectedIngredients);
+document.querySelector("ingredients-list").addEventListener("change", ({detail: {selectedIngredients }}) => {
+    document.getElementById("meals").classList.toggle("filtered", selectedIngredients.size > 0);
 
     // Find meals with any of the selected ingredients.
     // Alternative is to find meal with all the selected ingredients.
@@ -44,7 +31,6 @@ document.getElementById("ingredients").addEventListener("click", (event) => {
     }
 
     document.getElementById("result").innerHTML = "&nbsp;";
-  }
 });
 
 // Button to randomly pick a meal.
