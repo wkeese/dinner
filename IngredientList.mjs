@@ -1,5 +1,8 @@
 import {ingredients} from './ingredients.mjs';
 
+/**
+ * Set of toggle buttons for each ingredient.
+ */
 class IngredientList extends HTMLElement {
   // Lifecycle methods
   connectedCallback() {
@@ -8,9 +11,8 @@ class IngredientList extends HTMLElement {
     // Create a shadow root
     const shadow = this.attachShadow({mode: "open"});
 
-    // Create some CSS to apply to the shadow dom
+    // Create some CSS to apply to the shadow dom.
     const style = document.createElement("style");
-
     style.textContent = `
       ul {
         list-style: none;

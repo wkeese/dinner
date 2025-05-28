@@ -1,7 +1,8 @@
-import {ingredients} from './ingredients.mjs';
 import {meals} from './meals.mjs';
 
-/* Button to pick one of the possible meals. */
+/**
+ * Button to pick one of the possible meals.
+ */
 class MealPicker extends HTMLElement {
   static observedAttributes = ["filter"];
 
@@ -12,9 +13,8 @@ class MealPicker extends HTMLElement {
     // Create a shadow root
     const shadow = this.attachShadow({mode: "open"});
 
-    // Create some CSS to apply to the shadow dom
+    // Create some CSS to apply to the shadow dom.
     const style = document.createElement("style");
-
     style.textContent = `
       .container {
           display: flex;
@@ -39,7 +39,7 @@ class MealPicker extends HTMLElement {
           }
       }
       
-      /* Result */
+      /* Picked meal. */
       .result {
           line-height: 200%;
       }
@@ -60,6 +60,7 @@ class MealPicker extends HTMLElement {
 
     this.possibleMeals = meals.map(meal => meal.name);
 
+    // When button clicked, pick a meal.
     this.button.addEventListener("click", () => {
       let pickedMeal = "";
       if (this.possibleMeals.length > 0) {

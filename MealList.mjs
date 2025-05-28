@@ -1,7 +1,8 @@
-import {ingredients} from './ingredients.mjs';
 import {meals} from './meals.mjs';
 
-
+/**
+ * List of meals, possibly filtered by selection in ingredients list.
+ */
 class MealList extends HTMLElement {
   static observedAttributes = ["filter"];
 
@@ -12,9 +13,8 @@ class MealList extends HTMLElement {
     // Create a shadow root
     const shadow = this.attachShadow({mode: "open"});
 
-    // Create some CSS to apply to the shadow dom
+    // Create some CSS to apply to the shadow dom.
     const style = document.createElement("style");
-
     style.textContent = `
       ul {
         list-style: none;
