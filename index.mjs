@@ -12,8 +12,9 @@ if (missingIngredients.size > 0) {
 // Display checkbox for each ingredient.
 document.getElementById("ingredients").innerHTML = Array.from(ingredients).sort().map(ingredient =>
   `<li>
-      <input type="checkbox" id="${ingredient.name}">
-      <label for="${ingredient.name}">${ingredient.icon} ${ingredient.name}</label>
+      <button id="${ingredient.name}" aria-pressed="false">
+          ${ingredient.icon} ${ingredient.name}
+      </button>
   </li>`).join("");
 
 // Display list of  meals.
@@ -24,21 +25,26 @@ document.getElementById("meals").innerHTML = meals.sort((a, b) => {
 
 // Update possible meals depending on which checkboxes are checked.
 let possibleMeals = meals.map(meal => meal.name);
-document.addEventListener("change", () => {
-  const selectedIngredients = new Set(Array.from(document.querySelectorAll("input:checked")).map(input => input.id))
-  console.log("selected ingredients", selectedIngredients);
+document.getElementById("ingredients").addEventListener("click", (event) => {
+  const button = event.target;
+  if (event.target.tagName.toLowerCase() === "button") {
+    event.target.setAttribute("aria-pressed", event.target.getAttribute("aria-pressed") === "true" ? "false" : "true");
 
-  // Find meals with any of the selected ingredients.
-  // Alternative is to find meal with all the selected ingredients.
-  possibleMeals = (selectedIngredients.size > 0  ? meals.filter(meal => selectedIngredients.intersection(meal.ingredients).size > 0) : meals).map(meal => meal.name);
+    const selectedIngredients = new Set(Array.from(document.querySelectorAll("button[aria-pressed='true']")).map(input => input.id))
+    console.log("selected ingredients", selectedIngredients);
 
-  // Gray out invalid meals, and highlight ones that are still valid.
-  for(const meal of document.querySelectorAll("#meals li")) {
-    const included = possibleMeals.includes(meal.id)
-    meal.classList.toggle("matched", selectedIngredients.size > 0 && included);
+    // Find meals with any of the selected ingredients.
+    // Alternative is to find meal with all the selected ingredients.
+    possibleMeals = (selectedIngredients.size > 0  ? meals.filter(meal => selectedIngredients.intersection(meal.ingredients).size > 0) : meals).map(meal => meal.name);
+
+    // Gray out invalid meals, and highlight ones that are still valid.
+    for(const meal of document.querySelectorAll("#meals li")) {
+      const included = possibleMeals.includes(meal.id)
+      meal.classList.toggle("matched", selectedIngredients.size > 0 && included);
+    }
+
+    document.getElementById("result").innerHTML = "&nbsp;";
   }
-
-  document.getElementById("result").innerHTML = "&nbsp;";
 });
 
 // Button to randomly pick a meal.
