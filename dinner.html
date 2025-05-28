@@ -11,8 +11,15 @@
         }
 
         /* Button to pick one of the possible meals. */
-        #pickOneButton {
+        #pickerContainer {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
             font-size: 400%;
+            gap: 10px;
+        }
+        #pickOneButton {
+            font-size: 100%;
             border: none;
             background: none !important;
             cursor: grab;
@@ -24,9 +31,8 @@
                 transform:rotate(360deg);
             }
         }
-
         #result {
-            font-size: 400%;
+            line-height: 200%;
         }
 
         fieldset {
@@ -106,7 +112,9 @@
 <body>
 <h1>What's for dinner?</h1>
 
-<span id="result"></span> <button type="button" id="pickOneButton" onclick="pickOne();">🎲</button>
+<div id="pickerContainer">
+    <button type="button" id="pickOneButton" onclick="pickOne();">🎲</button> → <span id="result">&nbsp;</span>
+</div>
 
 <fieldset>
     <legend>Leftover Ingredients</legend>
@@ -345,7 +353,7 @@
       meal.classList.toggle("matched", selectedIngredients.size > 0 && included);
     }
 
-    document.getElementById("result").textContent = "";
+    document.getElementById("result").innerHTML = "&nbsp;";
   });
 
   // Pick one for me.
