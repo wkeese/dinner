@@ -3,3 +3,9 @@
 This is just a little site to help us pick something for dinner.
 
 Navigate to https://wkeese.github.io/dinner/.
+
+To test locally, run:
+
+```
+npx http-server
+```

@@ -1,0 +1,108 @@
+body {
+    background: #ffffff;
+    background: linear-gradient(2deg, rgba(255, 255, 255, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+
+/* Button to pick one of the possible meals. */
+#pickerContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 400%;
+    gap: 10px;
+}
+
+#pickOneButton {
+    font-size: 100%;
+    border: none;
+    background: none !important;
+    cursor: grab;
+
+    animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#result {
+    line-height: 200%;
+}
+
+/* Container for ingredients and meals */
+fieldset {
+    margin-bottom: 10px;
+
+    ul {
+        list-style: none;
+    }
+}
+
+/* Style ingredients to look like toggle buttons. */
+#ingredients {
+    /* Multi column layout. */
+    column-count: auto;
+    column-width: 16rem;
+
+    input {
+        display: none;
+    }
+
+    label {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        cursor: pointer;
+        border: solid 1px transparent;
+        background: white;
+        padding: 5px;
+        margin: 5px;
+        transition: all 200ms;
+
+        &::after {
+            /* To prevent height change, always render checkbox, but toggle visibility. */
+            content: "✅";
+            visibility: hidden;
+        }
+    }
+
+    input:checked + label {
+        border-color: black;
+        background: beige;
+
+        &::after {
+            visibility: visible;
+        }
+    }
+}
+
+/* Style meals */
+#meals {
+    /* Multi column layout. */
+    column-count: auto;
+    column-width: 20rem;
+
+    li {
+        padding: 5px;
+        transition: all 200ms;
+    }
+
+    /* Styling only for when one or more ingredients are selected. */
+
+    li.matched {
+        color: navy;
+        font-size: 110%;
+    }
+
+    fieldset:has(input:checked) + fieldset & li:not(.matched) {
+        padding: 0;
+        font-size: 0;
+    }
+}
+
+
+* {
+    text-transform: capitalize;
+}
