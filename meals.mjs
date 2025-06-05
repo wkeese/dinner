@@ -45,6 +45,7 @@ const mealsData = `
       🍝: Cabbage pasta: cabbage
       🍝: Pasta primavera: asparagus, squash, zucchini, mushrooms, tomatoes, white wine
       🇯🇵: 焼きそば: cabbage, carrots
+      🇯🇵: お好み焼き: cabbage
       🇰🇷: チヂミ Korean pancake thing
       🇫🇷: Galettes: eggs, tomatoes
       🇨🇳: マーボドフ: tofu, ひき肉
