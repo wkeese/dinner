@@ -19,6 +19,7 @@ class MealPicker extends HTMLElement {
       .container {
           display: flex;
           flex-direction: row;
+          flex-wrap: wrap;
           align-items: center;
           font-size: 400%;
           gap: 10px;
@@ -37,11 +38,6 @@ class MealPicker extends HTMLElement {
           100% {
               transform: rotate(360deg);
           }
-      }
-      
-      /* Picked meal. */
-      .result {
-          line-height: 200%;
       }
     `;
     shadow.appendChild(style);
