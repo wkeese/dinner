@@ -20,7 +20,10 @@ const mealsData = `
       🫓: Hummus
       🥚: Omelette: mushrooms, cheese, tomatoes, ピーマン
       🍽: Polenta: パプリカ, spinach, tomatoes
+      🥔: Baked potato party
+            🥔: Bangers and mash
       🍕: Pizza: tomatoes, mozarella, ピーマン, salami
+      🍖: Ribs
       🐟: サバ, rice, and veggies
       🐟: サンマ, rice, and veggies
       🍲: そば: 長ネギ
@@ -41,9 +44,11 @@ const mealsData = `
       🇰🇷: キムチ soup
       🍚: 三色丼 (Avocado Sashimi Mozarella): avocados, mozarella
       🍚: 三色丼 (Spinach egg ひき肉): eggs, spinach, ひき肉
+      🍚: ゴーヤジャムぷる
       🍝: Spinach bacon pasta: spinach, bacon, cream
       🍝: Cabbage pasta: cabbage
       🍝: Pasta primavera: asparagus, squash, zucchini, mushrooms, tomatoes, white wine
+      🍝: Tomato shiso pasta: tomatoes
       🇯🇵: 焼きそば: cabbage, carrots
       🇯🇵: お好み焼き: cabbage
       🇰🇷: チヂミ Korean pancake thing
