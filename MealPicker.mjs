@@ -21,12 +21,12 @@ class MealPicker extends HTMLElement {
           flex-direction: row;
           flex-wrap: wrap;
           align-items: center;
-          font-size: 400%;
+          font-size: 150%;
           gap: 10px;
       }
       
       button {
-          font-size: 100%;
+          font-size: 150%;
           border: none;
           background: none !important;
           cursor: grab;
@@ -47,7 +47,8 @@ class MealPicker extends HTMLElement {
     container.className = "container";
     container.innerHTML = `
         <button type="button">🎲</button>
-        → <span class="result">&nbsp;</span>
+        →
+        <span class="result">&nbsp;</span>
     `;
     shadow.appendChild(container);
 
