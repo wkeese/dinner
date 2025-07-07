@@ -20,8 +20,8 @@ const mealsData = `
       🫓: Hummus
       🥚: Omelette: mushrooms, cheese, tomatoes, ピーマン
       🍽: Polenta: パプリカ, spinach, tomatoes
-      🥔: Baked potato party
-            🥔: Bangers and mash
+      🥔: Baked potato party: potatoes, bacon, cheese, mushrooms
+            🥔: Bangers and mash: potatoes, sausage
       🍕: Pizza: tomatoes, mozarella, ピーマン, salami
       🍖: Ribs
       🐟: サバ, rice, and veggies
